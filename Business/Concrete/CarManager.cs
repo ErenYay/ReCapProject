@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -60,6 +61,11 @@ namespace Business.Concrete
                 Console.WriteLine("The car daily price  must be greater than 0 and  name must be at least 2 characters.");
             }
 
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
         }
     }
 }
