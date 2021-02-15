@@ -13,10 +13,15 @@ namespace ConsoleUI
             //CarTest();
             //BrandTest();
             //ColorTest();
-            
+
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            var result = rentalManager.Add(new Rental { RentalId = 3, CarId = 8, CustomerId = 2, RentDate = DateTime.Now });
+            var result = rentalManager.Add(new Rental { CarId = 8, CustomerId = 2, RentDate = DateTime.Today });
             Console.WriteLine(result.Message);
+
+            //CarManager carManager = new CarManager(new EfCarDal());
+            //var result = carManager.Add(new Car { BrandId = 3, CarName = "A5 RS", ColorId = 4, ModelYear = 2018, DailyPrice=435 });
+            //Console.WriteLine(result.Message);
+
 
         }
 

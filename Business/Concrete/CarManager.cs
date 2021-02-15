@@ -7,6 +7,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Business.Concrete
@@ -44,7 +45,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id), Messages.CarsListed);
         }
-        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails(Expression<Func<Rental, bool>> filter = null)
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
@@ -56,7 +57,7 @@ namespace Business.Concrete
 
         public IResult Update(Car car)
         {
-            if (car.DailyPrice > 0 && car.Description.Length >= 2)
+            if (car.DailyPrice > 0 && car.CarName.Length >= 2)
             {
                 _carDal.Update(car);
                 return new SuccessResult(Messages.CarUpdated);
@@ -66,7 +67,7 @@ namespace Business.Concrete
         }
         public IResult Add(Car car)
         {
-            if (car.DailyPrice > 0 && car.Description.Length >= 2)
+            if (car.DailyPrice > 0 && car.CarName.Length >= 2)
             {
                 _carDal.Add(car);                
                 return new SuccessResult(Messages.CarAdded);
