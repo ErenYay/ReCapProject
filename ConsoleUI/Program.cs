@@ -14,11 +14,11 @@ namespace ConsoleUI
             //BrandTest();
             //ColorTest();
 
-
+                      
 
             // -- Kiralama Ekleme -- Şartlı!
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            var result = rentalManager.Update(new Rental { CarId = 7, CustomerId = 2, RentDate = DateTime.Today });
+            var result = rentalManager.Add(new Rental { CarId = 8, CustomerId = 2, RentDate = DateTime.Today });
             Console.WriteLine(result.Message);
 
             // -- Araç Ekleme -- Şartlı!
