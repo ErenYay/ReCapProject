@@ -22,6 +22,10 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        public CarManager()
+        {
+        }
+
         public IDataResult<List<Car>> GetAll()
         {
             if (DateTime.Now.Hour==22)

@@ -13,18 +13,23 @@ namespace ConsoleUI
             //CarTest();
             //BrandTest();
             //ColorTest();
+            
 
-                      
+            // -- Kiralama Güncelleme --
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.Update(new Rental { RentalId = 2, ReturnDate = new DateTime(2021, 02, 15, 12, 12, 12) });
+            Console.WriteLine(result.Message);
 
             // -- Kiralama Ekleme -- Şartlı!
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            var result = rentalManager.Add(new Rental { CarId = 8, CustomerId = 2, RentDate = DateTime.Today });
-            Console.WriteLine(result.Message);
+            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            //var result = rentalManager.Add(new Rental { CarId = 8, CustomerId = 2, RentDate = DateTime.Today });
+            //Console.WriteLine(result.Message);
 
             // -- Araç Ekleme -- Şartlı!
             //CarManager carManager = new CarManager(new EfCarDal());
             //var result = carManager.Add(new Car { BrandId = 3, CarName = "A5 RS", ColorId = 4, ModelYear = 2018, DailyPrice=435 });
             //Console.WriteLine(result.Message);
+
 
 
         }
