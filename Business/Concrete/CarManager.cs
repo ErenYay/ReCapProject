@@ -1,10 +1,14 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -59,25 +63,20 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
-            if (car.DailyPrice > 0 && car.CarName.Length >= 2)
-            {
-                _carDal.Update(car);
-                return new SuccessResult(Messages.CarUpdated);
-            }            
-            return new ErrorResult(Messages.CarEntryInvalid);
-            
-        }
-        public IResult Add(Car car)
-        {
-            if (car.DailyPrice > 0 && car.CarName.Length >= 2)
-            {
-                _carDal.Add(car);                
-                return new SuccessResult(Messages.CarAdded);
-            }
-            return new ErrorResult(Messages.CarEntryInvalid);            
 
+            _carDal.Update(car);
+            return new SuccessResult(Messages.CarUpdated);
+        }
+        
+        [ValidationAspect(typeof(CarValidator))]
+        public IResult Add(Car car)
+        {           
+
+            _carDal.Add(car);
+            return new SuccessResult(Messages.CarAdded);
         }
         public IResult Delete(Car car)
         {

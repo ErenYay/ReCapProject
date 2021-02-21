@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -27,37 +30,27 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Brand>(_brandDal.Get(b => b.BrandId == brandId));
         }
-
-        IResult IBrandService.Add(Brand brand)
-        {
-            if (brand.BrandName.Length > 2)
-            {
-                _brandDal.Add(brand);                
-                return new SuccessResult(Messages.BrandAdded);
-            }
-            else
-            {                
-                return new ErrorResult(Messages.BrandNameInvalid);
-            }
-        }
-
+        
         IResult IBrandService.Delete(Brand brand)
         {
             _brandDal.Delete(brand);
             return new SuccessResult(Messages.BrandDeleted);
         }
 
+        [ValidationAspect(typeof(BrandValidator))]
+        IResult IBrandService.Add(Brand brand)
+        {
+
+            _brandDal.Add(brand);
+            return new SuccessResult(Messages.BrandAdded);
+        }
+
+        [ValidationAspect(typeof(BrandValidator))]
         IResult IBrandService.Update(Brand brand)
         {
-            if (brand.BrandName.Length >= 2)
-            {
-                _brandDal.Update(brand);               
-                return new SuccessResult(Messages.BrandUpdated);
-            }
-            else
-            {                
-                return new ErrorResult(Messages.BrandNameInvalid);
-            }
+
+            _brandDal.Update(brand);
+            return new SuccessResult(Messages.BrandUpdated);
         }
     }
 }
